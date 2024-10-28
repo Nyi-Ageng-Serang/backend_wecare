@@ -1,11 +1,24 @@
 
 # Backend WeCare
-## Using Express JS
+
+## Tech Stack
+
+**Server:** Node, Express
+
 ## Step 
-- Install Dependencies || npm install
-- Konfigurasi Environment || cp .env.example .env
-- Jalankan project || npm run dev
-- Akses Aplikasi || http://localhost:3000
+Install Dependencies
+```bash
+  npm install
+```
+Konfigurasi Environment    
+```bash
+  cp .env.example .env
+```
+Jalankan project 
+```bash
+  npm run dev
+```
+Akses Aplikasi default http://localhost:3000
 
 
 ## API Reference
