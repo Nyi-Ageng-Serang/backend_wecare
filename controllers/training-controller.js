@@ -83,4 +83,30 @@ module.exports = {
       res.status(500).json({ message: "Failed to add daftar bacaan", error });
     }
   },
+
+  getDaftarPelatihan: async (req, res) => {
+    const { id } = req.params;
+
+    try {
+      const training = await Training.findById(id);
+      if (!training) return res.status(404).json({ message: "Training not found" });
+
+      res.json({ daftarPelatihan: training.daftarPelatihan });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to retrieve daftar pelatihan", error });
+    }
+  },
+
+  getDaftarBacaan: async (req, res) => {
+    const { id } = req.params;
+
+    try {
+      const training = await Training.findById(id);
+      if (!training) return res.status(404).json({ message: "Training not found" });
+
+      res.json({ daftarBacaan: training.daftarBacaan });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to retrieve daftar bacaan", error });
+    }
+  },
 };
