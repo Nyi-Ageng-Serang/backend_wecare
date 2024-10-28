@@ -9,6 +9,12 @@ module.exports = {
   regis: async (req, res) => {
     const { fullName, email, password, confirmPassword } = req.body;
 
+     // Cek apakah email sudah terdaftar
+     const existingUser = await User.findOne({ email });
+     if (existingUser) {
+       return res.status(400).json({ message: "Email is already registered" });
+     }
+
     if (password !== confirmPassword) {
       return res.status(400).json({ message: "Passwords do not match" });
     }
