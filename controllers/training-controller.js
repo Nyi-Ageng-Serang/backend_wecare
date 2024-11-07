@@ -14,23 +14,23 @@ module.exports = {
     const {
       image_url,
       category,
+      title,
       level,
       provider,
       type,
       registration_url,
-      kelas_id,
     } = req.body;
 
     try {
-      // Create a new training instance without checking kelas_id uniqueness
+      // Buat instance Training baru
       const newTraining = new Training({
         image_url,
         category,
+        title,
         level,
         provider,
         type,
         registration_url,
-        kelas_id,
       });
 
       await newTraining.save();

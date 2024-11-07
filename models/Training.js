@@ -9,6 +9,10 @@ const trainingSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  title: {
+    type: String,
+    required: true,
+  },
   level: {
     type: String,
     required: true,
@@ -22,10 +26,6 @@ const trainingSchema = new mongoose.Schema({
     required: true,
   },
   registration_url: {
-    type: String,
-    required: true,
-  },
-  kelas_id: {
     type: String,
     required: true,
   },
