@@ -72,7 +72,7 @@ module.exports = {
 
       const comment = {
         user: userId,
-        userName: user.fullName, // Asumsikan User memiliki field fullName
+        userName: user.fullName, 
         content,
       };
 
@@ -99,4 +99,19 @@ module.exports = {
       res.status(500).json({ message: "Gagal mengambil postingan", error });
     }
   },
+  
+  getAllPosts: async (req, res) => {
+    try {
+      const posts = await Post.find()
+        .sort({ createdAt: -1 }) // Mengurutkan berdasarkan createdAt, terbaru di atas
+        .populate("user", "fullName") // Menampilkan nama user yang membuat postingan
+        .populate("comments.user", "fullName"); // Menampilkan nama user yang mengomentari
+
+      res.status(200).json({ posts });
+    } catch (error) {
+      res.status(500).json({ message: "Gagal mengambil postingan", error });
+    }
+  },
+
+
 };
