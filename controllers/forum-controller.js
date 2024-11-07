@@ -17,7 +17,12 @@ module.exports = {
       const newCategory = new Category({ name, description });
       await newCategory.save();
 
-      res.status(201).json({ message: "Kategori berhasil ditambahkan", category: newCategory });
+      res
+        .status(201)
+        .json({
+          message: "Kategori berhasil ditambahkan",
+          category: newCategory,
+        });
     } catch (error) {
       res.status(500).json({ message: "Gagal menambahkan kategori", error });
     }
@@ -40,7 +45,8 @@ module.exports = {
 
     try {
       const user = await User.findById(userId);
-      if (!user) return res.status(404).json({ message: "User tidak ditemukan" });
+      if (!user)
+        return res.status(404).json({ message: "User tidak ditemukan" });
 
       const newPost = new Post({
         category,
@@ -52,7 +58,9 @@ module.exports = {
 
       await newPost.save();
 
-      res.status(201).json({ message: "Postingan berhasil ditambahkan", post: newPost });
+      res
+        .status(201)
+        .json({ message: "Postingan berhasil ditambahkan", post: newPost });
     } catch (error) {
       res.status(500).json({ message: "Gagal menambahkan postingan", error });
     }
@@ -65,14 +73,16 @@ module.exports = {
 
     try {
       const user = await User.findById(userId);
-      if (!user) return res.status(404).json({ message: "User tidak ditemukan" });
+      if (!user)
+        return res.status(404).json({ message: "User tidak ditemukan" });
 
       const post = await Post.findById(postId);
-      if (!post) return res.status(404).json({ message: "Postingan tidak ditemukan" });
+      if (!post)
+        return res.status(404).json({ message: "Postingan tidak ditemukan" });
 
       const comment = {
         user: userId,
-        userName: user.fullName, 
+        userName: user.fullName,
         content,
       };
 
@@ -99,7 +109,7 @@ module.exports = {
       res.status(500).json({ message: "Gagal mengambil postingan", error });
     }
   },
-  
+
   getAllPosts: async (req, res) => {
     try {
       const posts = await Post.find()
@@ -113,5 +123,23 @@ module.exports = {
     }
   },
 
+  getPostById: async (req, res) => {
+    const { postId } = req.params;
 
+    try {
+      const post = await Post.findById(postId)
+        .populate("user", "fullName") // Menampilkan nama user yang membuat postingan
+        .populate("comments.user", "fullName"); // Menampilkan nama user yang mengomentari
+
+      if (!post) {
+        return res.status(404).json({ message: "Postingan tidak ditemukan" });
+      }
+
+      res.status(200).json({ post });
+    } catch (error) {
+      res
+        .status(500)
+        .json({ message: "Gagal mengambil detail postingan", error });
+    }
+  },
 };
